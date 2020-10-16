@@ -30,33 +30,69 @@
                <div class="content getting-started">
                    <div class="content-data">
 
-<h1 id="pluralize">Pluralize</h1>
-<p><a href="https://npmjs.org/package/pluralize"><img src="https://img.shields.io/npm/v/pluralize.svg?style=flat" alt="NPM version" class="img-responsive"></a>
-<a href="https://npmjs.org/package/pluralize"><img src="https://img.shields.io/npm/dm/pluralize.svg?style=flat" alt="NPM downloads" class="img-responsive"></a>
-<a href="https://travis-ci.org/blakeembrey/pluralize"><img src="https://img.shields.io/travis/blakeembrey/pluralize.svg?style=flat" alt="Build status" class="img-responsive"></a>
-<a href="https://coveralls.io/r/blakeembrey/pluralize?branch=master"><img src="https://img.shields.io/coveralls/blakeembrey/pluralize.svg?style=flat" alt="Test coverage" class="img-responsive"></a>
-<img src="https://img.shields.io/github/size/blakeembrey/pluralize/pluralize.js.svg?style=flat" alt="File Size" class="img-responsive">
-<a href="https://cdnjs.com/libraries/pluralize"><img src="https://img.shields.io/cdnjs/v/pluralize.svg" alt="CDNJS" class="img-responsive"></a></p>
-<blockquote>
-<p>Pluralize and singularize any word.</p>
-</blockquote>
-<h2 id="installation">Installation</h2>
-<div><pre class="line-numbers"><code class="language-none">npm install pluralize --save
-yarn add pluralize
-bower install pluralize --save</code></pre></div><h3 id="node">Node</h3>
-<div><pre class="line-numbers"><code class="language-javascript">var pluralize = require(&#39;pluralize&#39;)</code></pre></div><h3 id="amd">AMD</h3>
-<div><pre class="line-numbers"><code class="language-javascript">define(function (require, exports, module) {
-  var pluralize = require(&#39;pluralize&#39;)
-})</code></pre></div><h3 id="script-tag"><code>&lt;script&gt;</code> tag</h3>
-<div><pre class="line-numbers"><code class="language-html">&lt;script src=&quot;pluralize.js&quot;&gt;&lt;/script&gt;</code></pre></div><h2 id="why">Why?</h2>
-<p>This module uses a pre-defined list of rules, applied in order, to singularize or pluralize a given word. There are many cases where this is useful, such as any automation based on user input. For applications where the word(s) are known ahead of time, you can use a simple ternary (or function) which would be a much lighter alternative.</p>
-<h2 id="usage">Usage</h2>
+<h1 id="ng-pluralize">ng-pluralize</h1>
+<p><a href="https://www.npmjs.com/package/ng-pluralize/"><img src="https://img.shields.io/npm/l/ng-pluralize.svg" alt="npm" class="img-responsive"></a>
+<a href="https://www.npmjs.com/package/ng-pluralize"><img src="https://img.shields.io/npm/dt/ng-pluralize.svg" alt="npm" class="img-responsive"></a>
+<a href="https://www.npmjs.com/package/ng-pluralize"><img src="https://img.shields.io/npm/dm/ng-pluralize.svg" alt="npm" class="img-responsive"></a></p>
+<p><img src="example.gif" alt="" class="img-responsive"></p>
+<h2 id="index">Index</h2>
 <ul>
-<li><code>word: string</code> The word to pluralize</li>
-<li><code>count: number</code> How many of the word exist</li>
-<li><code>inclusive: boolean</code> Whether to prefix with the number (e.g. 3 ducks)</li>
+<li><a href="#about">About</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#contributing">Contributing</a></li>
+<li><a href="#issues">Issues</a></li>
+<li><a href="#deploy">Deploy</a></li>
 </ul>
-<p>Examples:</p>
+<h2 id="about">About</h2>
+<p>An Angular 2+ module to pluralize and singularize any word.</p>
+<ul>
+<li>Try out <a href="https://ng-pluralize.jrquick.com">the demo</a> to see it in action!</li>
+<li>Visit <a href="https://jrquick.com">my website</a> for other cool projects!</li>
+</ul>
+<h2 id="setup">Setup</h2>
+<h3 id="install-node">Install Node</h3>
+<div><pre class="line-numbers"><code class="language-none">npm install ng-pluralize --save</code></pre></div><h3 id="import-module">Import module</h3>
+<ul>
+<li><p>Import <code>NgPluralizeModule</code> by adding the following to your parent module (i.e. <code>app.module.ts</code>):</p>
+<div><pre class="line-numbers"><code class="language-none">  import { NgPluralizeModule } from &#39;ng-pluralize&#39;;
+
+  &#64;NgModule({
+    ...
+    imports: [
+      NgPluralizeModule,
+      ...
+    ],
+    ...
+  })
+  export class AppModule {}</code></pre></div></li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="use-service">Use Service</h3>
+<div><pre class="line-numbers"><code class="language-typescript">import {NgPluralizeService} from &#39;ng-pluralize&#39;;
+
+&#64;Injectable()
+export class TechCheckService {
+  constructor(
+    private service:NgPluralizeService
+  ) {
+    this.service.singularize(&#39;dogs&#39;); // dog
+    this.service.pluralize(&#39;cat&#39;); // cats
+    this.service.fromCount(&#39;taco&#39;, 99); // tacoes
+  }
+}</code></pre></div><h2 id="documentation">Documentation</h2>
+<ul>
+<li><code>singularize()</code> - Convert a word into it&#39;s singular form (ie dogs to dog)</li>
+<li><code>pluralize()</code> - Convert a word into it&#39;s plural form (ie cat to cats)</li>
+<li><code>fromCount(word, count, inclusive)</code> - Get the current internet speed in KBPS (kilobytes per second).<ul>
+<li><code>word: string</code> - The word to pluralize</li>
+<li><code>count: number</code> - How many of the word exist</li>
+<li><code>inclusive: boolean</code> - Whether to prefix with the number (e.g. 3 ducks)</li>
+</ul>
+</li>
+</ul>
+<h3 id="examples">Examples</h3>
 <div><pre class="line-numbers"><code class="language-javascript">pluralize(&#39;test&#39;) //=&gt; &quot;tests&quot;
 pluralize(&#39;test&#39;, 0) //=&gt; &quot;tests&quot;
 pluralize(&#39;test&#39;, 1) //=&gt; &quot;test&quot;
@@ -66,33 +102,75 @@ pluralize(&#39;test&#39;, 5, true) //=&gt; &quot;5 tests&quot;
 pluralize(&#39;蘋果&#39;, 2, true) //=&gt; &quot;2 蘋果&quot;
 
 // Example of new plural rule:
-pluralize.plural(&#39;regex&#39;) //=&gt; &quot;regexes&quot;
+pluralize.pluralize(&#39;regex&#39;) //=&gt; &quot;regexes&quot;
 pluralize.addPluralRule(/gex$/i, &#39;gexii&#39;)
-pluralize.plural(&#39;regex&#39;) //=&gt; &quot;regexii&quot;
+pluralize.pluralize(&#39;regex&#39;) //=&gt; &quot;regexii&quot;
 
 // Example of new singular rule:
-pluralize.singular(&#39;singles&#39;) //=&gt; &quot;single&quot;
+pluralize.singularize(&#39;singles&#39;) //=&gt; &quot;single&quot;
 pluralize.addSingularRule(/singles$/i, &#39;singular&#39;)
-pluralize.singular(&#39;singles&#39;) //=&gt; &quot;singular&quot;
+pluralize.singularize(&#39;singles&#39;) //=&gt; &quot;singular&quot;
 
 // Example of new irregular rule, e.g. &quot;I&quot; -&gt; &quot;we&quot;:
-pluralize.plural(&#39;irregular&#39;) //=&gt; &quot;irregulars&quot;
+pluralize.pluralize(&#39;irregular&#39;) //=&gt; &quot;irregulars&quot;
 pluralize.addIrregularRule(&#39;irregular&#39;, &#39;regular&#39;)
-pluralize.plural(&#39;irregular&#39;) //=&gt; &quot;regular&quot;
+pluralize.pluralize(&#39;irregular&#39;) //=&gt; &quot;regular&quot;
 
 // Example of uncountable rule (rules without singular/plural in context):
-pluralize.plural(&#39;paper&#39;) //=&gt; &quot;papers&quot;
+pluralize.pluralize(&#39;paper&#39;) //=&gt; &quot;papers&quot;
 pluralize.addUncountableRule(&#39;paper&#39;)
-pluralize.plural(&#39;paper&#39;) //=&gt; &quot;paper&quot;
+pluralize.pluralize(&#39;paper&#39;) //=&gt; &quot;paper&quot;
 
 // Example of asking whether a word looks singular or plural:
 pluralize.isPlural(&#39;test&#39;) //=&gt; false
 pluralize.isSingular(&#39;test&#39;) //=&gt; true
 
 // Example of adding a token exception whose case should not be restored:
-pluralize.plural(&#39;promo ID&#39;) //=&gt; &#39;promo IDS&#39;
+pluralize.pluralize(&#39;promo ID&#39;) //=&gt; &#39;promo IDS&#39;
 pluralize.addRestoreCaseException(&#39;IDs&#39;)
-pluralize.plural(&#39;promo ID&#39;) //=&gt; &#39;promo IDs&#39;</code></pre></div><h2 id="license">License</h2>
+pluralize.pluralize(&#39;promo ID&#39;) //=&gt; &#39;promo IDs&#39;</code></pre></div><h2 id="contributing">Contributing</h2>
+<h3 id="thanks">Thanks</h3>
+<ul>
+<li><a href="https://github.com/blakeembrey">blakeembrey</a></li>
+<li><a href="https://github.com/jrquick17">jrquick17</a></li>
+</ul>
+<h2 id="issues">Issues</h2>
+<p>If you find any issues feel free to open a request in <a href="https://github.com/jrquick17/ng-pluralize/issues">the Issues tab</a>. If I have the time I will try to solve any issues but cannot make any guarantees. Feel free to contribute yourself.</p>
+<h2 id="deploy">Deploy</h2>
+<h3 id="demo">Demo</h3>
+<ul>
+<li>Run <code>npm install</code> to get packages required for the demo and then run <code>npm run demo</code> to run locally.</li>
+</ul>
+<h3 id="generate-docs">Generate Docs</h3>
+<ul>
+<li>Run <code>npm run docs:build</code></li>
+</ul>
+<h4 id="update-version">Update Version</h4>
+<ul>
+<li>Update version <code>package.json</code> files in both the root and <code>dist/</code> directory following <a href="https://semver.org/">Semantic Versioning (2.0.0)</a>.</li>
+</ul>
+<h3 id="build">Build</h3>
+<ul>
+<li>Run <code>npm run build</code> from root.</li>
+</ul>
+<h4 id="test">Test</h4>
+<ul>
+<li>Copy <code>dist/</code> contents into <code>demo/node_modules/ng-pluralize/</code><ul>
+<li>Run from root:  <code>cp -fr dist/* demo/node_modules/ng-pluralize/</code></li>
+</ul>
+</li>
+<li>Run <code>ng serve</code> from <code>demo/</code></li>
+<li>Run <code>ng build --prod</code> from <code>demo/</code></li>
+</ul>
+<h4 id="npm-release">NPM Release</h4>
+<ul>
+<li>Run <code>npm publish</code> from <code>dist/</code> directory.</li>
+</ul>
+<h4 id="update-changelog">Update Changelog</h4>
+<ul>
+<li>Add updates to <code>CHANGELOG.md</code> in root.</li>
+</ul>
+<h2 id="license">License</h2>
 <p>MIT</p>
 
 
