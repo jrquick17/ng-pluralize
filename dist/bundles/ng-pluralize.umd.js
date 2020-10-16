@@ -243,38 +243,113 @@
              *
              * @type {Function}
              */
-            this.plural = this.replaceWord(this.irregularSingles, this.irregularPlurals, this.pluralRules);
+            this.pluralize = this._replaceWord(this.irregularSingles, this.irregularPlurals, this.pluralRules);
             /**
              * Check if a word is pluralize.
              *
              * @type {Function}
              */
-            this.isPlural = this.checkWord(this.irregularSingles, this.irregularPlurals, this.pluralRules);
+            this.isPlural = this._checkWord(this.irregularSingles, this.irregularPlurals, this.pluralRules);
             /**
              * Singularize a word.
              *
              * @type {Function}
              */
-            this.singular = this.replaceWord(this.irregularPlurals, this.irregularSingles, this.singularRules);
+            this.singularize = this._replaceWord(this.irregularPlurals, this.irregularSingles, this.singularRules);
             /**
              * Check if a word is singularize.
              *
              * @type {Function}
              */
-            this.isSingular = this.checkWord(this.irregularPlurals, this.irregularSingles, this.singularRules);
+            this.isSingular = this._checkWord(this.irregularPlurals, this.irregularSingles, this.singularRules);
             this._loadRules();
         }
         /**
-         * Sanitize a pluralization rule to a usable regular expression.
-         *
-         * @param  {(RegExp|string)} rule
-         * @return {RegExp}
+         * Check if a word is part of the map.
          */
-        PluralizeService.prototype.sanitizeRule = function (rule) {
-            if (typeof rule === 'string') {
-                return new RegExp('^' + rule + '$', 'i');
-            }
-            return rule;
+        PluralizeService.prototype._checkWord = function (replaceMap, keepMap, rules) {
+            var _this = this;
+            return function (word) {
+                var token = word.toLowerCase();
+                if (keepMap.hasOwnProperty(token)) {
+                    return true;
+                }
+                if (replaceMap.hasOwnProperty(token)) {
+                    return false;
+                }
+                return _this._sanitizeWord(token, token, rules) === token;
+            };
+        };
+        /**
+         * Interpolate a regexp string.
+         *
+         * @param  {string} str
+         * @param  {Array}  args
+         * @return {string}
+         */
+        PluralizeService.prototype._interpolate = function (str, args) {
+            return str.replace(/\$(\d{1,2})/g, function (match, index) {
+                return args[index] || '';
+            });
+        };
+        PluralizeService.prototype._loadRules = function () {
+            var _this = this;
+            NgPluralizeIrregularRules.forEach(function (rule) {
+                return _this.addIrregularRule(rule[0], rule[1]);
+            });
+            NgPluralizeSingularizationRules.forEach(function (rule) {
+                return _this.addSingularRule(rule[0], rule[1]);
+            });
+            NgPluralizePluralizationRules.forEach(function (rule) {
+                return _this.addPluralRule(rule[0], rule[1]);
+            });
+            /**
+             * Uncountable rules.
+             */
+            NgPluralizeUncountable.forEach(function (rule) {
+                _this.addUncountableRule(rule);
+            });
+        };
+        /**
+         * Replace a word using a rule.
+         *
+         * @param  {string} word
+         * @param  {Array}  rule
+         * @return {string}
+         */
+        PluralizeService.prototype._replace = function (word, rule) {
+            return word.replace(rule[0], function (match, index) {
+                var result = this._interpolate(rule[1], arguments);
+                if (match === '') {
+                    return this._restoreCase(word[index - 1], result);
+                }
+                return this._restoreCase(match, result);
+            }.bind(this));
+        };
+        /**
+         * Replace a word with the updated word.
+         *
+         * @param  {Object}   replaceMap
+         * @param  {Object}   keepMap
+         * @param  {Array}    rules
+         * @return {Function}
+         */
+        PluralizeService.prototype._replaceWord = function (replaceMap, keepMap, rules) {
+            var _this = this;
+            return function (word) {
+                // Get the correct token and case restoration functions.
+                var token = word.toLowerCase();
+                // Check against the keep object map.
+                if (keepMap.hasOwnProperty(token)) {
+                    return _this._restoreCase(word, token);
+                }
+                // Check against the replacement map for a direct word replacement.
+                if (replaceMap.hasOwnProperty(token)) {
+                    return _this._restoreCase(word, replaceMap[token]);
+                }
+                // Run all the rules against the word.
+                return _this._sanitizeWord(token, word, rules);
+            };
         };
         /**
          * Pass in a word token to produce a function that can replicate the case on
@@ -284,7 +359,7 @@
          * @param  {string}   token
          * @return {Function}
          */
-        PluralizeService.prototype.restoreCase = function (word, token) {
+        PluralizeService.prototype._restoreCase = function (word, token) {
             // Do not restore the case of specified tokens
             if (this.restoreCaseExceptions.indexOf(token) !== -1) {
                 return token;
@@ -306,32 +381,16 @@
             return token.toLowerCase();
         };
         /**
-         * Interpolate a regexp string.
+         * Sanitize a pluralization rule to a usable regular expression.
          *
-         * @param  {string} str
-         * @param  {Array}  args
-         * @return {string}
+         * @param  {(RegExp|string)} rule
+         * @return {RegExp}
          */
-        PluralizeService.prototype.interpolate = function (str, args) {
-            return str.replace(/\$(\d{1,2})/g, function (match, index) {
-                return args[index] || '';
-            });
-        };
-        /**
-         * Replace a word using a rule.
-         *
-         * @param  {string} word
-         * @param  {Array}  rule
-         * @return {string}
-         */
-        PluralizeService.prototype.replace = function (word, rule) {
-            return word.replace(rule[0], function (match, index) {
-                var result = this.interpolate(rule[1], arguments);
-                if (match === '') {
-                    return this.restoreCase(word[index - 1], result);
-                }
-                return this.restoreCase(match, result);
-            }.bind(this));
+        PluralizeService._sanitizeRule = function (rule) {
+            if (typeof rule === 'string') {
+                return new RegExp('^' + rule + '$', 'i');
+            }
+            return rule;
         };
         /**
          * Sanitize a word by passing in the word and sanitization rules.
@@ -341,7 +400,7 @@
          * @param  {Array}    rules
          * @return {string}
          */
-        PluralizeService.prototype.sanitizeWord = function (token, word, rules) {
+        PluralizeService.prototype._sanitizeWord = function (token, word, rules) {
             // Empty string or doesn't need fixing.
             if (!token.length || this.uncountables.hasOwnProperty(token)) {
                 return word;
@@ -351,63 +410,9 @@
             while (len--) {
                 var rule = rules[len];
                 if (rule[0].test(word))
-                    return this.replace(word, rule);
+                    return this._replace(word, rule);
             }
             return word;
-        };
-        /**
-         * Replace a word with the updated word.
-         *
-         * @param  {Object}   replaceMap
-         * @param  {Object}   keepMap
-         * @param  {Array}    rules
-         * @return {Function}
-         */
-        PluralizeService.prototype.replaceWord = function (replaceMap, keepMap, rules) {
-            var _this = this;
-            return function (word) {
-                // Get the correct token and case restoration functions.
-                var token = word.toLowerCase();
-                // Check against the keep object map.
-                if (keepMap.hasOwnProperty(token)) {
-                    return _this.restoreCase(word, token);
-                }
-                // Check against the replacement map for a direct word replacement.
-                if (replaceMap.hasOwnProperty(token)) {
-                    return _this.restoreCase(word, replaceMap[token]);
-                }
-                // Run all the rules against the word.
-                return _this.sanitizeWord(token, word, rules);
-            };
-        };
-        /**
-         * Check if a word is part of the map.
-         */
-        PluralizeService.prototype.checkWord = function (replaceMap, keepMap, rules) {
-            var _this = this;
-            return function (word) {
-                var token = word.toLowerCase();
-                if (keepMap.hasOwnProperty(token)) {
-                    return true;
-                }
-                if (replaceMap.hasOwnProperty(token)) {
-                    return false;
-                }
-                return _this.sanitizeWord(token, token, rules) === token;
-            };
-        };
-        /**
-         * Pluralize or singularize a word based on the passed in count.
-         *
-         * @param  {string}  word      The word to fromCount
-         * @param  {number}  count     How many of the word exist
-         * @param  {boolean} inclusive Whether to prefix with the number (e.g. 3 ducks)
-         * @return {string}
-         */
-        PluralizeService.prototype.pluralize = function (word, count, inclusive) {
-            var pluralized = count === 1
-                ? this.singularize(word) : this.pluralize(word);
-            return (inclusive ? count + ' ' : '') + pluralized;
         };
         /**
          * Add a pluralization rule to the collection.
@@ -416,7 +421,7 @@
          * @param {string}          replacement
          */
         PluralizeService.prototype.addPluralRule = function (rule, replacement) {
-            this.pluralRules.push([this.sanitizeRule(rule), replacement]);
+            this.pluralRules.push([PluralizeService._sanitizeRule(rule), replacement]);
         };
         ;
         /**
@@ -435,7 +440,7 @@
          * @param {string}          replacement
          */
         PluralizeService.prototype.addSingularRule = function (rule, replacement) {
-            this.singularRules.push([this.sanitizeRule(rule), replacement]);
+            this.singularRules.push([PluralizeService._sanitizeRule(rule), replacement]);
         };
         ;
         /**
@@ -466,23 +471,18 @@
             this.irregularPlurals[plural] = single;
         };
         ;
-        PluralizeService.prototype._loadRules = function () {
-            var _this = this;
-            NgPluralizeIrregularRules.forEach(function (rule) {
-                return _this.addIrregularRule(rule[0], rule[1]);
-            });
-            NgPluralizeSingularizationRules.forEach(function (rule) {
-                return _this.addSingularRule(rule[0], rule[1]);
-            });
-            NgPluralizePluralizationRules.forEach(function (rule) {
-                return _this.addPluralRule(rule[0], rule[1]);
-            });
-            /**
-             * Uncountable rules.
-             */
-            NgPluralizeUncountable.forEach(function (rule) {
-                _this.addUncountableRule(rule);
-            });
+        /**
+         * Pluralize or singularize a word based on the passed in count.
+         *
+         * @param  {string}  word      The word to fromCount
+         * @param  {number}  count     How many of the word exist
+         * @param  {boolean} inclusive Whether to prefix with the number (e.g. 3 ducks)
+         * @return {string}
+         */
+        PluralizeService.prototype.fromCount = function (word, count, inclusive) {
+            var pluralized = count === 1
+                ? this.singularize(word) : this.pluralize(word);
+            return (inclusive ? count + ' ' : '') + pluralized;
         };
         return PluralizeService;
     }());
@@ -518,4 +518,4 @@
     Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=ng-fromCount.umd.js.map
+//# sourceMappingURL=ng-pluralize.umd.js.map

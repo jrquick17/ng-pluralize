@@ -7,21 +7,9 @@ export declare class PluralizeService {
     private restoreCaseExceptions;
     constructor();
     /**
-     * Sanitize a pluralization rule to a usable regular expression.
-     *
-     * @param  {(RegExp|string)} rule
-     * @return {RegExp}
+     * Check if a word is part of the map.
      */
-    sanitizeRule(rule: string | RegExp): RegExp;
-    /**
-     * Pass in a word token to produce a function that can replicate the case on
-     * another word.
-     *
-     * @param  {string}   word
-     * @param  {string}   token
-     * @return {Function}
-     */
-    restoreCase(word: string, token: string): string;
+    private _checkWord;
     /**
      * Interpolate a regexp string.
      *
@@ -29,7 +17,8 @@ export declare class PluralizeService {
      * @param  {Array}  args
      * @return {string}
      */
-    interpolate(str: string, args: any): string;
+    private _interpolate;
+    private _loadRules;
     /**
      * Replace a word using a rule.
      *
@@ -37,16 +26,7 @@ export declare class PluralizeService {
      * @param  {Array}  rule
      * @return {string}
      */
-    replace(word: string, rule: any): string;
-    /**
-     * Sanitize a word by passing in the word and sanitization rules.
-     *
-     * @param  {string}   token
-     * @param  {string}   word
-     * @param  {Array}    rules
-     * @return {string}
-     */
-    sanitizeWord(token: string, word: string, rules: any): string;
+    _replace(word: string, rule: any): string;
     /**
      * Replace a word with the updated word.
      *
@@ -55,44 +35,32 @@ export declare class PluralizeService {
      * @param  {Array}    rules
      * @return {Function}
      */
-    replaceWord(replaceMap: any, keepMap: any, rules: any): (word: any) => string;
+    private _replaceWord;
     /**
-     * Check if a word is part of the map.
-     */
-    checkWord(replaceMap: any, keepMap: any, rules: any): Function;
-    /**
-     * Pluralize or singularize a word based on the passed in count.
+     * Pass in a word token to produce a function that can replicate the case on
+     * another word.
      *
-     * @param  {string}  word      The word to fromCount
-     * @param  {number}  count     How many of the word exist
-     * @param  {boolean} inclusive Whether to prefix with the number (e.g. 3 ducks)
+     * @param  {string}   word
+     * @param  {string}   token
+     * @return {Function}
+     */
+    private _restoreCase;
+    /**
+     * Sanitize a pluralization rule to a usable regular expression.
+     *
+     * @param  {(RegExp|string)} rule
+     * @return {RegExp}
+     */
+    private static _sanitizeRule;
+    /**
+     * Sanitize a word by passing in the word and sanitization rules.
+     *
+     * @param  {string}   token
+     * @param  {string}   word
+     * @param  {Array}    rules
      * @return {string}
      */
-    pluralize(word: string, count: number, inclusive: boolean): string;
-    /**
-     * Pluralize a word.
-     *
-     * @type {Function}
-     */
-    plural: (word: any) => string;
-    /**
-     * Check if a word is pluralize.
-     *
-     * @type {Function}
-     */
-    isPlural: Function;
-    /**
-     * Singularize a word.
-     *
-     * @type {Function}
-     */
-    singular: (word: any) => string;
-    /**
-     * Check if a word is singularize.
-     *
-     * @type {Function}
-     */
-    isSingular: Function;
+    private _sanitizeWord;
     /**
      * Add a pluralization rule to the collection.
      *
@@ -126,5 +94,37 @@ export declare class PluralizeService {
      * @param {string} plural
      */
     addIrregularRule(single: any, plural: any): void;
-    private _loadRules;
+    /**
+     * Pluralize or singularize a word based on the passed in count.
+     *
+     * @param  {string}  word      The word to fromCount
+     * @param  {number}  count     How many of the word exist
+     * @param  {boolean} inclusive Whether to prefix with the number (e.g. 3 ducks)
+     * @return {string}
+     */
+    fromCount(word: string, count: number, inclusive: boolean): string;
+    /**
+     * Pluralize a word.
+     *
+     * @type {Function}
+     */
+    pluralize: (word: any) => string;
+    /**
+     * Check if a word is pluralize.
+     *
+     * @type {Function}
+     */
+    isPlural: Function;
+    /**
+     * Singularize a word.
+     *
+     * @type {Function}
+     */
+    singularize: (word: any) => string;
+    /**
+     * Check if a word is singularize.
+     *
+     * @type {Function}
+     */
+    isSingular: Function;
 }
