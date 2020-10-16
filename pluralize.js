@@ -22,6 +22,7 @@
   var uncountables = {};
   var irregularPlurals = {};
   var irregularSingles = {};
+  var restoreCaseExceptions = [];
 
   /**
    * Sanitize a pluralization rule to a usable regular expression.
@@ -46,6 +47,9 @@
    * @return {Function}
    */
   function restoreCase (word, token) {
+    // Do not restore the case of specified tokens
+    if (restoreCaseExceptions.indexOf(token) !== -1) return token;
+
     // Tokens are an exact match.
     if (word === token) return token;
 
@@ -226,6 +230,16 @@
   };
 
   /**
+   * Add an exception to restoreCase.
+   *
+   * @param {string} exception
+   */
+
+  pluralize.addRestoreCaseException = function (exception) {
+    restoreCaseExceptions.push(exception);
+  };
+
+  /**
    * Add a singularization rule to the collection.
    *
    * @param {(string|RegExp)} rule
@@ -320,7 +334,8 @@
     ['thief', 'thieves'],
     ['groove', 'grooves'],
     ['pickaxe', 'pickaxes'],
-    ['passerby', 'passersby']
+    ['passerby', 'passersby'],
+    ['whiskey', 'whiskies']
   ].forEach(function (rule) {
     return pluralize.addIrregularRule(rule[0], rule[1]);
   });
@@ -474,6 +489,7 @@
     'sewage',
     'shambles',
     'shrimp',
+    'species',
     'software',
     'staff',
     'swine',
