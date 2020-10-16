@@ -1,0 +1,42 @@
+<p>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span (click)="goToGitHub()" style="cursor: pointer;">ng-pluralize</span>
+
+      <button mat-icon-button
+              style="margin-left: 10px;"
+              aria-label="Go to GitHub"
+              (click)="goToGitHub()">
+        <mat-icon>home</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</p>
+
+<mat-card style="margin: 20px; padding: 20px;">
+  <mat-card-content>
+    <div style="
+            margin-left: auto;
+            margin-right: auto;
+            min-width: 1px;
+            max-width: 280px;
+         ">
+      <mat-form-field>
+        <mat-label>Word</mat-label>
+
+        <input matInput
+               type="text"
+               [min]="1"
+               [max]="100"
+               [(ngModel)]="word"/>
+      </mat-form-field>
+
+      <button mat-raised-button
+              style="margin-left: 10px;"
+              (click)="update()"
+              [disabled]="word.length === 0">
+        {{ word.length === 0 ? 'Pluralize/Singularize' : (isSingular(word) ? 'Pluralize' : 'Singularize')}}
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
