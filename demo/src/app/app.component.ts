@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {PluralizeService} from 'ng-pluralize';
+import {NgPluralizeService} from 'ng-pluralize';
 
 @Component({
   selector:    'app-root',
@@ -16,7 +16,7 @@ export class AppComponent {
   public word2:string = '';
 
   constructor(
-    private service:PluralizeService
+    private service:NgPluralizeService
   ) {
 
   }

@@ -21,7 +21,7 @@
             min-width: 1px;
             max-width: 300px;
          ">
-      <mat-form-field>
+      <mat-form-field style="margin-bottom: 15px;">
         <mat-label>Word</mat-label>
 
         <input matInput
@@ -35,12 +35,12 @@
               style="margin-left: 10px;"
               (click)="update()"
               [disabled]="word.length === 0">
-        {{ word.length === 0 ? 'Pluralize/Singularize' : (isSingular(word) ? 'Pluralize' : 'Singularize')}}
+        {{ word.length === 0 ? 'Update' : (isSingular(word) ? 'Pluralize' : 'Singularize')}}
       </button>
 
-      <mat-divider></mat-divider>
+      <mat-divider [vertical]="true"></mat-divider>
 
-      <mat-form-field>
+      <mat-form-field style="margin-top: 15px;">
         <mat-label>Word</mat-label>
 
         <input matInput

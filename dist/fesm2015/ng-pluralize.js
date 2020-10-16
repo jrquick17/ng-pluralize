@@ -226,7 +226,7 @@ var NgPluralizeUncountable = [
     /sheep$/i
 ];
 
-class PluralizeService {
+class NgPluralizeService {
     constructor() {
         this.pluralRules = [];
         this.singularRules = [];
@@ -414,7 +414,7 @@ class PluralizeService {
      * @param {string}          replacement
      */
     addPluralRule(rule, replacement) {
-        this.pluralRules.push([PluralizeService._sanitizeRule(rule), replacement]);
+        this.pluralRules.push([NgPluralizeService._sanitizeRule(rule), replacement]);
     }
     ;
     /**
@@ -433,7 +433,7 @@ class PluralizeService {
      * @param {string}          replacement
      */
     addSingularRule(rule, replacement) {
-        this.singularRules.push([PluralizeService._sanitizeRule(rule), replacement]);
+        this.singularRules.push([NgPluralizeService._sanitizeRule(rule), replacement]);
     }
     ;
     /**
@@ -478,17 +478,17 @@ class PluralizeService {
         return (inclusive ? count + ' ' : '') + pluralized;
     }
 }
-PluralizeService.decorators = [
+NgPluralizeService.decorators = [
     { type: Injectable }
 ];
-PluralizeService.ctorParameters = () => [];
+NgPluralizeService.ctorParameters = () => [];
 
 class NgPluralizeModule {
 }
 NgPluralizeModule.decorators = [
     { type: NgModule, args: [{
                 providers: [
-                    PluralizeService
+                    NgPluralizeService
                 ]
             },] }
 ];
@@ -497,5 +497,5 @@ NgPluralizeModule.decorators = [
  * Generated bundle index. Do not edit.
  */
 
-export { NgPluralizeIrregularRules, NgPluralizeModule, NgPluralizePluralizationRules, NgPluralizeSingularizationRules, NgPluralizeUncountable, PluralizeService };
+export { NgPluralizeIrregularRules, NgPluralizeModule, NgPluralizePluralizationRules, NgPluralizeService, NgPluralizeSingularizationRules, NgPluralizeUncountable };
 //# sourceMappingURL=ng-pluralize.js.map

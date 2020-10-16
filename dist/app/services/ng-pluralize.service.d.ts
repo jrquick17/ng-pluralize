@@ -1,4 +1,4 @@
-export declare class PluralizeService {
+export declare class NgPluralizeService {
     private pluralRules;
     private singularRules;
     private uncountables;

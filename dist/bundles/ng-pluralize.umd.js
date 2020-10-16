@@ -230,8 +230,8 @@
         /sheep$/i
     ];
 
-    var PluralizeService = /** @class */ (function () {
-        function PluralizeService() {
+    var NgPluralizeService = /** @class */ (function () {
+        function NgPluralizeService() {
             this.pluralRules = [];
             this.singularRules = [];
             this.uncountables = {};
@@ -267,7 +267,7 @@
         /**
          * Check if a word is part of the map.
          */
-        PluralizeService.prototype._checkWord = function (replaceMap, keepMap, rules) {
+        NgPluralizeService.prototype._checkWord = function (replaceMap, keepMap, rules) {
             var _this = this;
             return function (word) {
                 var token = word.toLowerCase();
@@ -287,12 +287,12 @@
          * @param  {Array}  args
          * @return {string}
          */
-        PluralizeService.prototype._interpolate = function (str, args) {
+        NgPluralizeService.prototype._interpolate = function (str, args) {
             return str.replace(/\$(\d{1,2})/g, function (match, index) {
                 return args[index] || '';
             });
         };
-        PluralizeService.prototype._loadRules = function () {
+        NgPluralizeService.prototype._loadRules = function () {
             var _this = this;
             NgPluralizeIrregularRules.forEach(function (rule) {
                 return _this.addIrregularRule(rule[0], rule[1]);
@@ -317,7 +317,7 @@
          * @param  {Array}  rule
          * @return {string}
          */
-        PluralizeService.prototype._replace = function (word, rule) {
+        NgPluralizeService.prototype._replace = function (word, rule) {
             return word.replace(rule[0], function (match, index) {
                 var result = this._interpolate(rule[1], arguments);
                 if (match === '') {
@@ -334,7 +334,7 @@
          * @param  {Array}    rules
          * @return {Function}
          */
-        PluralizeService.prototype._replaceWord = function (replaceMap, keepMap, rules) {
+        NgPluralizeService.prototype._replaceWord = function (replaceMap, keepMap, rules) {
             var _this = this;
             return function (word) {
                 // Get the correct token and case restoration functions.
@@ -359,7 +359,7 @@
          * @param  {string}   token
          * @return {Function}
          */
-        PluralizeService.prototype._restoreCase = function (word, token) {
+        NgPluralizeService.prototype._restoreCase = function (word, token) {
             // Do not restore the case of specified tokens
             if (this.restoreCaseExceptions.indexOf(token) !== -1) {
                 return token;
@@ -386,7 +386,7 @@
          * @param  {(RegExp|string)} rule
          * @return {RegExp}
          */
-        PluralizeService._sanitizeRule = function (rule) {
+        NgPluralizeService._sanitizeRule = function (rule) {
             if (typeof rule === 'string') {
                 return new RegExp('^' + rule + '$', 'i');
             }
@@ -400,7 +400,7 @@
          * @param  {Array}    rules
          * @return {string}
          */
-        PluralizeService.prototype._sanitizeWord = function (token, word, rules) {
+        NgPluralizeService.prototype._sanitizeWord = function (token, word, rules) {
             // Empty string or doesn't need fixing.
             if (!token.length || this.uncountables.hasOwnProperty(token)) {
                 return word;
@@ -420,8 +420,8 @@
          * @param {(string|RegExp)} rule
          * @param {string}          replacement
          */
-        PluralizeService.prototype.addPluralRule = function (rule, replacement) {
-            this.pluralRules.push([PluralizeService._sanitizeRule(rule), replacement]);
+        NgPluralizeService.prototype.addPluralRule = function (rule, replacement) {
+            this.pluralRules.push([NgPluralizeService._sanitizeRule(rule), replacement]);
         };
         ;
         /**
@@ -429,7 +429,7 @@
          *
          * @param {string} exception
          */
-        PluralizeService.prototype.addRestoreCaseException = function (exception) {
+        NgPluralizeService.prototype.addRestoreCaseException = function (exception) {
             this.restoreCaseExceptions.push(exception);
         };
         ;
@@ -439,8 +439,8 @@
          * @param {(string|RegExp)} rule
          * @param {string}          replacement
          */
-        PluralizeService.prototype.addSingularRule = function (rule, replacement) {
-            this.singularRules.push([PluralizeService._sanitizeRule(rule), replacement]);
+        NgPluralizeService.prototype.addSingularRule = function (rule, replacement) {
+            this.singularRules.push([NgPluralizeService._sanitizeRule(rule), replacement]);
         };
         ;
         /**
@@ -448,7 +448,7 @@
          *
          * @param {(string|RegExp)} word
          */
-        PluralizeService.prototype.addUncountableRule = function (word) {
+        NgPluralizeService.prototype.addUncountableRule = function (word) {
             if (typeof word === 'string') {
                 this.uncountables[word.toLowerCase()] = true;
                 return;
@@ -464,7 +464,7 @@
          * @param {string} single
          * @param {string} plural
          */
-        PluralizeService.prototype.addIrregularRule = function (single, plural) {
+        NgPluralizeService.prototype.addIrregularRule = function (single, plural) {
             plural = plural.toLowerCase();
             single = single.toLowerCase();
             this.irregularSingles[single] = plural;
@@ -479,17 +479,17 @@
          * @param  {boolean} inclusive Whether to prefix with the number (e.g. 3 ducks)
          * @return {string}
          */
-        PluralizeService.prototype.fromCount = function (word, count, inclusive) {
+        NgPluralizeService.prototype.fromCount = function (word, count, inclusive) {
             var pluralized = count === 1
                 ? this.singularize(word) : this.pluralize(word);
             return (inclusive ? count + ' ' : '') + pluralized;
         };
-        return PluralizeService;
+        return NgPluralizeService;
     }());
-    PluralizeService.decorators = [
+    NgPluralizeService.decorators = [
         { type: core.Injectable }
     ];
-    PluralizeService.ctorParameters = function () { return []; };
+    NgPluralizeService.ctorParameters = function () { return []; };
 
     var NgPluralizeModule = /** @class */ (function () {
         function NgPluralizeModule() {
@@ -499,7 +499,7 @@
     NgPluralizeModule.decorators = [
         { type: core.NgModule, args: [{
                     providers: [
-                        PluralizeService
+                        NgPluralizeService
                     ]
                 },] }
     ];
@@ -511,9 +511,9 @@
     exports.NgPluralizeIrregularRules = NgPluralizeIrregularRules;
     exports.NgPluralizeModule = NgPluralizeModule;
     exports.NgPluralizePluralizationRules = NgPluralizePluralizationRules;
+    exports.NgPluralizeService = NgPluralizeService;
     exports.NgPluralizeSingularizationRules = NgPluralizeSingularizationRules;
     exports.NgPluralizeUncountable = NgPluralizeUncountable;
-    exports.PluralizeService = PluralizeService;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
