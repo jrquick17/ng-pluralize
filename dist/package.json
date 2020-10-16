@@ -1,6 +1,6 @@
 {
   "name": "ng-pluralize",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Angular project to pluralize and singularize any word",
   "readme": "README.md",
   "homepage": "https://ng-pluralize.jrquick.com",
