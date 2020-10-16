@@ -1,0 +1,39 @@
+{
+  "name": "ng-pluralize",
+  "version": "0.0.1",
+  "description": "Angular project to pluralize and singularize any word",
+  "readme": "README.md",
+  "homepage": "https://ng-pluralize.jrquick.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jrquick17/ng-pluralize"
+  },
+  "keywords": [
+    "angular",
+    "plural",
+    "plurals",
+    "pluralize",
+    "singular",
+    "singularize",
+    "inflection"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jrquick17/ng-pluralize/issues"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "peerDependencies": {},
+  "main": "bundles/ng-pluralize.umd.js",
+  "module": "fesm2015/ng-pluralize.js",
+  "es2015": "fesm2015/ng-pluralize.js",
+  "esm2015": "esm2015/ng-pluralize.js",
+  "fesm2015": "fesm2015/ng-pluralize.js",
+  "typings": "ng-pluralize.d.ts",
+  "metadata": "ng-pluralize.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}
