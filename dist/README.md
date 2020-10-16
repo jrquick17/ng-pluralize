@@ -20,14 +20,14 @@ bower install pluralize --save
 ### Node
 
 ```javascript
-var pluralize = require('pluralize')
+var pluralize = require('fromCount')
 ```
 
 ### AMD
 
 ```javascript
 define(function (require, exports, module) {
-  var pluralize = require('pluralize')
+  var pluralize = require('fromCount')
 })
 ```
 
@@ -58,27 +58,27 @@ pluralize('test', 1, true) //=> "1 test"
 pluralize('test', 5, true) //=> "5 tests"
 pluralize('蘋果', 2, true) //=> "2 蘋果"
 
-// Example of new plural rule:
+// Example of new pluralize rule:
 pluralize.plural('regex') //=> "regexes"
 pluralize.addPluralRule(/gex$/i, 'gexii')
 pluralize.plural('regex') //=> "regexii"
 
-// Example of new singular rule:
+// Example of new singularize rule:
 pluralize.singular('singles') //=> "single"
 pluralize.addSingularRule(/singles$/i, 'singular')
-pluralize.singular('singles') //=> "singular"
+pluralize.singular('singles') //=> "singularize"
 
 // Example of new irregular rule, e.g. "I" -> "we":
 pluralize.plural('irregular') //=> "irregulars"
 pluralize.addIrregularRule('irregular', 'regular')
 pluralize.plural('irregular') //=> "regular"
 
-// Example of uncountable rule (rules without singular/plural in context):
+// Example of uncountable rule (rules without singularize/pluralize in context):
 pluralize.plural('paper') //=> "papers"
 pluralize.addUncountableRule('paper')
 pluralize.plural('paper') //=> "paper"
 
-// Example of asking whether a word looks singular or plural:
+// Example of asking whether a word looks singularize or pluralize:
 pluralize.isPlural('test') //=> false
 pluralize.isSingular('test') //=> true
 

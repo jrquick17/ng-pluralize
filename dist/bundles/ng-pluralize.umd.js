@@ -245,7 +245,7 @@
              */
             this.plural = this.replaceWord(this.irregularSingles, this.irregularPlurals, this.pluralRules);
             /**
-             * Check if a word is plural.
+             * Check if a word is pluralize.
              *
              * @type {Function}
              */
@@ -257,7 +257,7 @@
              */
             this.singular = this.replaceWord(this.irregularPlurals, this.irregularSingles, this.singularRules);
             /**
-             * Check if a word is singular.
+             * Check if a word is singularize.
              *
              * @type {Function}
              */
@@ -399,14 +399,14 @@
         /**
          * Pluralize or singularize a word based on the passed in count.
          *
-         * @param  {string}  word      The word to pluralize
+         * @param  {string}  word      The word to fromCount
          * @param  {number}  count     How many of the word exist
          * @param  {boolean} inclusive Whether to prefix with the number (e.g. 3 ducks)
          * @return {string}
          */
         PluralizeService.prototype.pluralize = function (word, count, inclusive) {
             var pluralized = count === 1
-                ? this.singular(word) : this.plural(word);
+                ? this.singularize(word) : this.pluralize(word);
             return (inclusive ? count + ' ' : '') + pluralized;
         };
         /**
@@ -448,7 +448,7 @@
                 this.uncountables[word.toLowerCase()] = true;
                 return;
             }
-            // Set singular and plural references for the word.
+            // Set singularize and pluralize references for the word.
             this.addPluralRule(word, '$0');
             this.addSingularRule(word, '$0');
         };
@@ -518,4 +518,4 @@
     Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=ng-pluralize.umd.js.map
+//# sourceMappingURL=ng-fromCount.umd.js.map

@@ -63,7 +63,7 @@ export declare class PluralizeService {
     /**
      * Pluralize or singularize a word based on the passed in count.
      *
-     * @param  {string}  word      The word to pluralize
+     * @param  {string}  word      The word to fromCount
      * @param  {number}  count     How many of the word exist
      * @param  {boolean} inclusive Whether to prefix with the number (e.g. 3 ducks)
      * @return {string}
@@ -76,7 +76,7 @@ export declare class PluralizeService {
      */
     plural: (word: any) => string;
     /**
-     * Check if a word is plural.
+     * Check if a word is pluralize.
      *
      * @type {Function}
      */
@@ -88,7 +88,7 @@ export declare class PluralizeService {
      */
     singular: (word: any) => string;
     /**
-     * Check if a word is singular.
+     * Check if a word is singularize.
      *
      * @type {Function}
      */
