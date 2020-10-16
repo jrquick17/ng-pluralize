@@ -122,6 +122,7 @@ pluralize.pluralize('promo ID') //=> 'promo IDs'
 
 ### Thanks ###
 
+* [blakeembrey](https://github.com/blakeembrey)
 * [jrquick17](https://github.com/jrquick17)
 
 ## Issues ##
