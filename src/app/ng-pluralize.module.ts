@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 
-import {PluralizeService} from './services/pluralize.service';
+import {NgPluralizeService} from './services/ng-pluralize.service';
 
 @NgModule({
   providers: [
-    PluralizeService
+    NgPluralizeService
   ]
 })
 export class NgPluralizeModule {}

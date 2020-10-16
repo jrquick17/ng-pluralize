@@ -6,7 +6,7 @@ import {NgPluralizePluralizationRules} from '../vars/ng-pluralize-pluralization-
 import {NgPluralizeIrregularRules} from "../vars/ng-pluralize-irregular-rules.var";
 
 @Injectable()
-export class PluralizeService {
+export class NgPluralizeService {
   private pluralRules = [];
   private singularRules = [];
   private uncountables = {};
@@ -211,7 +211,7 @@ export class PluralizeService {
    * @param {string}          replacement
    */
   public addPluralRule(rule, replacement) {
-    this.pluralRules.push([PluralizeService._sanitizeRule(rule), replacement]);
+    this.pluralRules.push([NgPluralizeService._sanitizeRule(rule), replacement]);
   };
 
   /**
@@ -231,7 +231,7 @@ export class PluralizeService {
    * @param {string}          replacement
    */
   addSingularRule(rule, replacement) {
-    this.singularRules.push([PluralizeService._sanitizeRule(rule), replacement]);
+    this.singularRules.push([NgPluralizeService._sanitizeRule(rule), replacement]);
   };
 
   /**
