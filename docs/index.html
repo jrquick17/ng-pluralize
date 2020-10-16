@@ -1,0 +1,165 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>ng-pluralize</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	      <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">ng-pluralize</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="pluralize">Pluralize</h1>
+<p><a href="https://npmjs.org/package/pluralize"><img src="https://img.shields.io/npm/v/pluralize.svg?style=flat" alt="NPM version" class="img-responsive"></a>
+<a href="https://npmjs.org/package/pluralize"><img src="https://img.shields.io/npm/dm/pluralize.svg?style=flat" alt="NPM downloads" class="img-responsive"></a>
+<a href="https://travis-ci.org/blakeembrey/pluralize"><img src="https://img.shields.io/travis/blakeembrey/pluralize.svg?style=flat" alt="Build status" class="img-responsive"></a>
+<a href="https://coveralls.io/r/blakeembrey/pluralize?branch=master"><img src="https://img.shields.io/coveralls/blakeembrey/pluralize.svg?style=flat" alt="Test coverage" class="img-responsive"></a>
+<img src="https://img.shields.io/github/size/blakeembrey/pluralize/pluralize.js.svg?style=flat" alt="File Size" class="img-responsive">
+<a href="https://cdnjs.com/libraries/pluralize"><img src="https://img.shields.io/cdnjs/v/pluralize.svg" alt="CDNJS" class="img-responsive"></a></p>
+<blockquote>
+<p>Pluralize and singularize any word.</p>
+</blockquote>
+<h2 id="installation">Installation</h2>
+<div><pre class="line-numbers"><code class="language-none">npm install pluralize --save
+yarn add pluralize
+bower install pluralize --save</code></pre></div><h3 id="node">Node</h3>
+<div><pre class="line-numbers"><code class="language-javascript">var pluralize = require(&#39;pluralize&#39;)</code></pre></div><h3 id="amd">AMD</h3>
+<div><pre class="line-numbers"><code class="language-javascript">define(function (require, exports, module) {
+  var pluralize = require(&#39;pluralize&#39;)
+})</code></pre></div><h3 id="script-tag"><code>&lt;script&gt;</code> tag</h3>
+<div><pre class="line-numbers"><code class="language-html">&lt;script src=&quot;pluralize.js&quot;&gt;&lt;/script&gt;</code></pre></div><h2 id="why">Why?</h2>
+<p>This module uses a pre-defined list of rules, applied in order, to singularize or pluralize a given word. There are many cases where this is useful, such as any automation based on user input. For applications where the word(s) are known ahead of time, you can use a simple ternary (or function) which would be a much lighter alternative.</p>
+<h2 id="usage">Usage</h2>
+<ul>
+<li><code>word: string</code> The word to pluralize</li>
+<li><code>count: number</code> How many of the word exist</li>
+<li><code>inclusive: boolean</code> Whether to prefix with the number (e.g. 3 ducks)</li>
+</ul>
+<p>Examples:</p>
+<div><pre class="line-numbers"><code class="language-javascript">pluralize(&#39;test&#39;) //=&gt; &quot;tests&quot;
+pluralize(&#39;test&#39;, 0) //=&gt; &quot;tests&quot;
+pluralize(&#39;test&#39;, 1) //=&gt; &quot;test&quot;
+pluralize(&#39;test&#39;, 5) //=&gt; &quot;tests&quot;
+pluralize(&#39;test&#39;, 1, true) //=&gt; &quot;1 test&quot;
+pluralize(&#39;test&#39;, 5, true) //=&gt; &quot;5 tests&quot;
+pluralize(&#39;蘋果&#39;, 2, true) //=&gt; &quot;2 蘋果&quot;
+
+// Example of new plural rule:
+pluralize.plural(&#39;regex&#39;) //=&gt; &quot;regexes&quot;
+pluralize.addPluralRule(/gex$/i, &#39;gexii&#39;)
+pluralize.plural(&#39;regex&#39;) //=&gt; &quot;regexii&quot;
+
+// Example of new singular rule:
+pluralize.singular(&#39;singles&#39;) //=&gt; &quot;single&quot;
+pluralize.addSingularRule(/singles$/i, &#39;singular&#39;)
+pluralize.singular(&#39;singles&#39;) //=&gt; &quot;singular&quot;
+
+// Example of new irregular rule, e.g. &quot;I&quot; -&gt; &quot;we&quot;:
+pluralize.plural(&#39;irregular&#39;) //=&gt; &quot;irregulars&quot;
+pluralize.addIrregularRule(&#39;irregular&#39;, &#39;regular&#39;)
+pluralize.plural(&#39;irregular&#39;) //=&gt; &quot;regular&quot;
+
+// Example of uncountable rule (rules without singular/plural in context):
+pluralize.plural(&#39;paper&#39;) //=&gt; &quot;papers&quot;
+pluralize.addUncountableRule(&#39;paper&#39;)
+pluralize.plural(&#39;paper&#39;) //=&gt; &quot;paper&quot;
+
+// Example of asking whether a word looks singular or plural:
+pluralize.isPlural(&#39;test&#39;) //=&gt; false
+pluralize.isSingular(&#39;test&#39;) //=&gt; true
+
+// Example of adding a token exception whose case should not be restored:
+pluralize.plural(&#39;promo ID&#39;) //=&gt; &#39;promo IDS&#39;
+pluralize.addRestoreCaseException(&#39;IDs&#39;)
+pluralize.plural(&#39;promo ID&#39;) //=&gt; &#39;promo IDs&#39;</code></pre></div><h2 id="license">License</h2>
+<p>MIT</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
