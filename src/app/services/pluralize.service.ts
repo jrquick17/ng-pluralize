@@ -267,12 +267,12 @@ export class PluralizeService {
   /**
    * Pluralize or singularize a word based on the passed in count.
    *
-   * @param  {string}  word      The word to pluralize
+   * @param  {string}  word      The word to fromCount
    * @param  {number}  count     How many of the word exist
    * @param  {boolean} inclusive Whether to prefix with the number (e.g. 3 ducks)
    * @return {string}
    */
-  public pluralize(word:string, count:number, inclusive:boolean) {
+  public fromCount(word:string, count:number, inclusive:boolean) {
     var pluralized = count === 1
       ? this.singular(word) : this.plural(word);
 
