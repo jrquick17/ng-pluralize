@@ -245,7 +245,7 @@ export class PluralizeService {
       return;
     }
 
-    // Set singular and plural references for the word.
+    // Set singularize and pluralize references for the word.
     this.addPluralRule(word, '$0');
     this.addSingularRule(word, '$0');
   };
@@ -274,7 +274,7 @@ export class PluralizeService {
    */
   public fromCount(word:string, count:number, inclusive:boolean) {
     var pluralized = count === 1
-      ? this.singular(word) : this.plural(word);
+      ? this.singularize(word) : this.pluralize(word);
 
     return (inclusive ? count + ' ' : '') + pluralized;
   }
@@ -284,10 +284,10 @@ export class PluralizeService {
    *
    * @type {Function}
    */
-  public plural = this._replaceWord(this.irregularSingles, this.irregularPlurals, this.pluralRules);
+  public pluralize = this._replaceWord(this.irregularSingles, this.irregularPlurals, this.pluralRules);
 
   /**
-   * Check if a word is plural.
+   * Check if a word is pluralize.
    *
    * @type {Function}
    */
@@ -298,10 +298,10 @@ export class PluralizeService {
    *
    * @type {Function}
    */
-  public singular = this._replaceWord(this.irregularPlurals, this.irregularSingles, this.singularRules);
+  public singularize = this._replaceWord(this.irregularPlurals, this.irregularSingles, this.singularRules);
 
   /**
-   * Check if a word is singular.
+   * Check if a word is singularize.
    *
    * @type {Function}
    */
