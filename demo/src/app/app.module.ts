@@ -17,6 +17,7 @@ import {NgPluralizeModule} from 'ng-pluralize';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {AppComponent} from './app.component';
     MatFormFieldModule,
     MatProgressBarModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [

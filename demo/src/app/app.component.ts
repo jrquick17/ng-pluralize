@@ -11,7 +11,9 @@ import {PluralizeService} from 'ng-pluralize';
 export class AppComponent {
   title = 'ng-pluralize-demo';
 
+  public count:number = 1;
   public word:string = '';
+  public word2:string = '';
 
   constructor(
     private service:PluralizeService
@@ -27,11 +29,15 @@ export class AppComponent {
     return this.service.isSingular(word);
   }
 
+  fromCount():void {
+    this.word2 = this.service.fromCount(this.word2, this.count, true);
+  }
+
   update():void {
     if (this.isSingular(this.word)) {
-      this.word = this.service.pluralize(this.word, 2, true);
+      this.word = this.service.pluralize(this.word);
     } else {
-      this.word = this.service.singular(this.word);
+      this.word = this.service.singularize(this.word);
     }
   }
 }

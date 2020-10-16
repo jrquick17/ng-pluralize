@@ -19,7 +19,7 @@
             margin-left: auto;
             margin-right: auto;
             min-width: 1px;
-            max-width: 280px;
+            max-width: 300px;
          ">
       <mat-form-field>
         <mat-label>Word</mat-label>
@@ -36,6 +36,34 @@
               (click)="update()"
               [disabled]="word.length === 0">
         {{ word.length === 0 ? 'Pluralize/Singularize' : (isSingular(word) ? 'Pluralize' : 'Singularize')}}
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <mat-form-field>
+        <mat-label>Word</mat-label>
+
+        <input matInput
+               type="text"
+               [min]="1"
+               [max]="100"
+               [(ngModel)]="word2"/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Count</mat-label>
+
+        <input matInput
+               type="number"
+               [min]="1"
+               [(ngModel)]="count"/>
+      </mat-form-field>
+
+      <button mat-raised-button
+              style="margin-left: 10px;"
+              (click)="fromCount()"
+              [disabled]="word2.length === 0">
+        From Count
       </button>
     </div>
   </mat-card-content>
