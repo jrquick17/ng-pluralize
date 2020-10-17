@@ -63,7 +63,7 @@ export class TechCheckService {
   ) {
     this.service.singularize('dogs'); // dog
     this.service.pluralize('cat'); // cats
-    this.service.fromCount('taco', 99); // tacoes
+    this.service.fromCount('taco', 99); // tacos
   }
 }
 ```
