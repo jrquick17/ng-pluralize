@@ -61,9 +61,48 @@ export class TechCheckService {
   constructor(
     private service:NgPluralizeService
   ) {
+    // Example: Singularize word
     this.service.singularize('dogs'); // dog
+
+    // Example: Pluralize word 
     this.service.pluralize('cat'); // cats
-    this.service.fromCount('taco', 99); // tacoes
+  
+    // Example: Singluralize or pluralize based on count
+    this.service.fromCount('test', 0) //=> "tests"
+    this.service.fromCount('test', 1) //=> "test"
+    this.service.fromCount('test', 5) //=> "tests"
+    this.service.fromCount('test', 1, true) //=> "1 test"
+    this.service.fromCount('test', 5, true) //=> "5 tests"
+    this.service.fromCount('蘋果', 2, true) //=> "2 蘋果"
+    
+    // Example of new plural rule:
+    this.service.pluralize('regex') //=> "regexes"
+    this.service.addPluralRule(/gex$/i, 'gexii')
+    this.service.pluralize('regex') //=> "regexii"
+    
+    // Example of new singular rule:
+    this.service.singularize('singles') //=> "single"
+    this.service.addSingularRule(/singles$/i, 'singular')
+    this.service.singularize('singles') //=> "singular"
+    
+    // Example of new irregular rule, e.g. "I" -> "we":
+    this.service.pluralize('irregular') //=> "irregulars"
+    this.service.addIrregularRule('irregular', 'regular')
+    this.service.pluralize('irregular') //=> "regular"
+    
+    // Example of uncountable rule (rules without singular/plural in context):
+    this.service.pluralize('paper') //=> "papers"
+    this.service.addUncountableRule('paper')
+    this.service.pluralize('paper') //=> "paper"
+    
+    // Example of asking whether a word looks singular or plural:
+    this.service.isPlural('test') //=> false
+    this.service.isSingular('test') //=> true
+    
+    // Example of adding a token exception whose case should not be restored:
+    this.service.pluralize('promo ID') //=> 'promo IDS'
+    this.service.addRestoreCaseException('IDs')
+    this.service.pluralize('promo ID') //=> 'promo IDs'
   }
 }
 ```
@@ -76,47 +115,6 @@ export class TechCheckService {
     * `word: string` - The word to pluralize
     * `count: number` - How many of the word exist
     * `inclusive: boolean` - Whether to prefix with the number (e.g. 3 ducks)
-
-### Examples ###
-
-```javascript
-pluralize('test') //=> "tests"
-pluralize('test', 0) //=> "tests"
-pluralize('test', 1) //=> "test"
-pluralize('test', 5) //=> "tests"
-pluralize('test', 1, true) //=> "1 test"
-pluralize('test', 5, true) //=> "5 tests"
-pluralize('蘋果', 2, true) //=> "2 蘋果"
-
-// Example of new plural rule:
-pluralize.pluralize('regex') //=> "regexes"
-pluralize.addPluralRule(/gex$/i, 'gexii')
-pluralize.pluralize('regex') //=> "regexii"
-
-// Example of new singular rule:
-pluralize.singularize('singles') //=> "single"
-pluralize.addSingularRule(/singles$/i, 'singular')
-pluralize.singularize('singles') //=> "singular"
-
-// Example of new irregular rule, e.g. "I" -> "we":
-pluralize.pluralize('irregular') //=> "irregulars"
-pluralize.addIrregularRule('irregular', 'regular')
-pluralize.pluralize('irregular') //=> "regular"
-
-// Example of uncountable rule (rules without singular/plural in context):
-pluralize.pluralize('paper') //=> "papers"
-pluralize.addUncountableRule('paper')
-pluralize.pluralize('paper') //=> "paper"
-
-// Example of asking whether a word looks singular or plural:
-pluralize.isPlural('test') //=> false
-pluralize.isSingular('test') //=> true
-
-// Example of adding a token exception whose case should not be restored:
-pluralize.pluralize('promo ID') //=> 'promo IDS'
-pluralize.addRestoreCaseException('IDs')
-pluralize.pluralize('promo ID') //=> 'promo IDs'
-```
 
 ## Contributing ##
 
